@@ -1,0 +1,96 @@
+﻿@model Product
+
+@{
+    @section Buttons{
+        <a class="header-item"></a>
+        <a asp-action="Member" class="header-item">Thông tin thành viên</a>
+        <a asp-action="Index" class="header-item">Trang chủ</a>
+    }
+
+    @section Login{
+        <li class="user-info-item">
+            <a asp-controller="Login" asp-action="ChangetoChangePassword">Đổi mật khẩu</a>
+        </li>
+        <li class="user-info-item">
+            <a asp-controller="Home" asp-action="Index">Đăng xuất</a>
+        </li>
+    }
+}
+
+
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/nhanSu&DuAn.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.20.2/jodit.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.20.2/jodit.min.js"></script>
+</head>
+<body>
+
+    <div class="wrap-back" style="display:flex;">
+        <a asp-action="Index"><h2 class="backMainPage"> Trang Chủ</h2></a>
+        <p>/</p>
+        <a asp-action="Product"><h2 style="padding-left: 10px;" class="backMainPage"> Sản phẩm</h2></a>
+        <p>/</p>
+        <a asp-action="AddProduct"><h2 style="padding-left: 10px;" class="backMainPage"> Thêm sản phẩm</h2></a>
+    </div>
+    <form asp-action="AddProduct" method="post" id="form-addnotification">
+        <div class="wrap-themDuAn">
+            <label for="">
+                Tên sản phẩm:
+                <input type="text" name="name" placeholder="Name">
+            </label>
+            <label for="">
+                Giá sản phẩm:
+                <input type="text" name="cost" placeholder="ProjectType">
+            </label>
+            <label for="">
+                Giá bán ra:
+                <input type="text" name="price" placeholder="ProjectType">
+            </label>
+
+            <label for="">
+                Ảnh:
+                <input type="text" name="image" placeholder="ProjectType">
+            </label>
+            <label for="">
+                Số lượng trong kho:
+                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
+            </label>
+            <label for="">
+                Size:
+                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
+            </label>
+            <label for="">
+                Danh mục:
+                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
+            </label>
+        </div>
+            <label for="">
+                Mô tả:
+                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
+            </label>
+
+            <div class="" style="text-align:left; width: inherit;">
+                <div style="float: right;">
+                    <button type="submit" class="add-nhanSu">
+                        <i class="fa-solid fa-plus"></i>
+                        Thêm sản phẩm
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+    <script src="./js/dataNhanSu.js"></script>
+    <script src="./js/dataDuAn.js"></script>
+    <script>
+        const editor = Jodit.make('#notification_content');
+    </script>
+
+</body>
+</html>

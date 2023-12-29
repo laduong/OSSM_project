@@ -1,0 +1,250 @@
+﻿@model Product
+@{
+    @section Buttons{
+        <a class="header-item"></a>
+        <a asp-action="Dashboard" class="header-item">Tổng quan</a>
+        <a asp-action="Product" class="header-item">Sản phẩm</a>
+        <a asp-action="Store" class="header-item">Kho hàng</a>
+        <a asp-action="Bill" class="header-item">Hóa đơn</a>
+        <a asp-action="Cost" class="header-item">Chi phí</a>
+    }
+
+    @section Login{
+        <li class="user-info-item">
+            <a asp-controller="Login" asp-action="ChangetoChangePassword">Đổi mật khẩu</a>
+        </li>
+        <li class="user-info-item">
+            <a asp-controller="Home" asp-action="Index">Đăng xuất</a>
+        </li>
+    }
+}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/procedures.css">
+</head>
+<body>
+    <div class="wrap-back" style="display:flex;">
+        <a asp-action="Index"><h2 class="backMainPage"> Trang Chủ</h2></a>
+        <p>/</p>
+        <a asp-action="Product"><h2 style="padding-left: 10px;" class="backMainPage">Sản phẩm</h2></a>
+    </div>
+        <div class="left-column">
+            <div style="min-width: 60%; height: 100%; top: 120px;" class="form-frame">
+                <div class="avt" style="text-align: center; width: 45%; margin-right: 50px; border: 1px #ffd800 solid;">
+                    <div style="padding-top: 20px; padding-bottom: 30px; width: 85%; height: auto; margin: auto;">
+                        <img style="border: 1px #ffd800 solid; width: 100%; height: 100%;" src="~/img/product/@Model.Product_Image" alt="">
+                    </div>
+
+                    <form asp-action="UploadImg" method="post" enctype="multipart/form-data">
+                        <input name="var" type="hidden" value="edit" />
+                        <input name="id" type="hidden" value="@Model.Product_ID" />
+                        <input name="file" type="file" required />
+                        <button type="submit" class="nutan">Upload ảnh</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+            <form asp-action="EditProduct" asp-route-id="@Model.Product_ID" method="post" id="form">
+                <div class="product-details">
+
+                    <div class="right-column">
+                        <div class="product-info">
+                            <div style="margin: 16px 10px; justify-content: left;">
+                                <div>
+                                    <p>Tên sản phẩm:</p>
+                                    <div id="text-name">@Model.Product_Name</div>
+                                    <input style="display: none; height: 25px; margin-top: -5px;" id="name-input" type="text" name="name" value="@Model.Product_Name">
+                                    <i style="margin-left: 20px; cursor:pointer;" class="fa-regular fa-pen-to-square" id="name-symbol"></i>
+                                </div>
+                            </div>
+                            <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                                <div id="text-status">Size: @Model.Product_Category</div>
+                                <input style="display: none; height: 25px; margin-top: -5px;" id="input-size" type="text" name="size" value="@Model.Product_Category">
+                                <i style="margin-left: 20px; cursor:pointer;" class="fa-regular fa-pen-to-square" id="size-symbol"></i>
+                            </div>
+                            <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                                <div id="text-status">Mã sản phẩm: @Model.Product_ID</div>
+                                <input style="display: none; height: 25px; margin-top: -5px;" id="input-id" type="text" name="id" value="@Model.Product_ID">
+                                <i style="margin-left: 20px; cursor:pointer;" class="fa-regular fa-pen-to-square" id="id-symbol"></i>
+                            </div>
+                            <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                                <div id="text-status">Giá nhập: @Model.Product_Cost</div>
+                                <input style="display: none; height: 25px; margin-top: -5px;" id="input-cost" type="text" name="cost" value="@Model.Product_Cost">
+                                <i style="margin-left: 20px; cursor:pointer;" class="fa-regular fa-pen-to-square" id="id-symbol"></i>
+                            </div>
+                            <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                                <div id="text-status">Giá bán: @Model.Product_Price</div>
+                                <input style="display: none; height: 25px; margin-top: -5px;" id="input-price" type="text" name="price" value="@Model.Product_Price">
+                                <i style="margin-left: 20px; cursor:pointer;" class="fa-regular fa-pen-to-square" id="id-symbol"></i>
+                            </div>
+                            <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                                <div id="text-status">Số lượng: @Model.Product_Quanity</div>
+                                <input style="display: none; height: 25px; margin-top: -5px;" id="input-price" type="text" name="quanity" value="@Model.Product_Quanity">
+                            </div>
+                            <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                                <div id="text-status">Size: @Model.Product_Size</div>
+                                <input style="display: none; height: 25px; margin-top: -5px;" id="input-size" type="text" name="size" value="@Model.Product_Size">
+                                <i style="margin-left: 20px; cursor:pointer;" class="fa-regular fa-pen-to-square" id="size-symbol"></i>
+                            </div>
+                            <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                                <div id="text-status">Số lượng: @Model.Product_Category</div>
+                                <input style="display: none; height: 25px; margin-top: -5px;" id="input-price" type="text" name="category" value="@Model.Product_Category">
+                            </div>
+                            <div style="margin: auto;" id="text-symbol">
+                                <p>Mô tả <i style="margin-left: 20px;" class="fa-regular fa-pen-to-square"></i></p>
+                                <div style="display: block;
+                                    height: 300px;
+                                    background-color: #f5f5f5;
+                                    border: 2px solid #ccc;
+                                    line-height:34px;"
+                                     id="text-noiDung">
+                                    Mô tả sản phẩm
+                                </div>
+                                <input style="display:none; line-height:34px;width:100%; height: 300px;" name="text" id="input-noiDung" cols="30" rows="10" value="@Model.Product_Text"></input>
+                            </div>
+
+                            <div class=" ">
+                                <button class="add-nhanSu btn-confirm" onclick="confirm_change()" type="button" id="Send" style="width: 180px;">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Lưu
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+        </div>
+        <div style="display: none; min-width: 40%; height: 30%; left: 30%; top: 30%; z-index: 1;" class="form-frame" id="change-confirm">
+            <a style="text-align: center; color: #000;"> Bạn có chắc chắn muốn chỉnh sửa thông tin dự án này? </a>
+            <div>
+                <button class="form-submit" style="color:#000; border: 1px #edcd1f solid;" type="submit">Có</button>
+                <button class="form-submit" type="button" onclick="confirm_change_disabled()" style="margin-top: 15px; color:#000; border: 1px #edcd1f solid;">Không</button>
+            </div>
+        </div>
+        </form>
+        <style>
+
+            .product-details {
+                display: flex;
+                justify-content: space-between;
+                padding: 20px;
+                margin-top: 5%;
+            }
+
+            .left-column,
+            .right-column {
+                flex: 1;
+            }
+
+            .left-column {
+                width: 50%;
+                float: left;
+            }
+
+            .product-info {
+                margin-bottom: 2%;
+            }
+
+            .product-image {
+                margin-top: 5%;
+                width: 70%;
+                height: 40%;
+                margin-bottom: 2%;
+            }
+
+            .action-button {
+                background-color: #FFD700;
+                color: #000;
+                font-size: 16px;
+                margin-top: 20px;
+                margin-right: 100%;
+                margin-left: 20px;
+                width: 35%;
+                height: 5%;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+
+            .right-column {
+                width: 50%;
+                float: left;
+                position: relative;
+            }
+
+            .left-column .product-info > * {
+                margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+            }
+
+            .right-column .product-info > * {
+                margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+            }
+
+            .right-column .product-info {
+                margin-bottom: 30px;
+            }
+
+            .right-column .image-container {
+                position: relative;
+            }
+
+            .right-column img {
+                width: 80%;
+                height: 20%;
+                margin-bottom: 2%;
+            }
+
+            /* Nút "Lưu" ở dưới hình ảnh ở cột phải */
+            .right-column .save-button {
+                background-color: #FFD700;
+                color: #000;
+                font-size: 16px;
+                margin-top: 10px;
+                margin-left: 55%;
+                margin-right: 100%;
+                width: 25%;
+                height: 5%;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        </style>
+
+        <script>
+
+            function confirm_change() {
+
+                document.getElementById("change-confirm").style.display = "block";
+            }
+
+            function confirm_change_disabled() {
+                document.getElementById("change-confirm").style.display = "none";
+            }
+        </script>
+        <script>
+            $("#name-symbol").click(function () {
+                document.getElementById("text-name").style.display = 'none';
+                document.getElementById("name-input").style.display = 'block';
+            })
+            $('#name-input').change(function () {
+                var textName = this.value;
+                console.log(textName);
+                if (textName) {
+                    document.getElementById('text-name').innerText = `${textName} `;
+                }
+            })
+            $('#name-input').focusout(function () {
+                document.getElementById("text-name").style.display = 'block';
+                document.getElementById("name-input").style.display = 'none';
+            })
+        </script>
+</body>
+
+
+
