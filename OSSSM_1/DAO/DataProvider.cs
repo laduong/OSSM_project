@@ -19,7 +19,7 @@ namespace OSSSM_1.DAO
 
 
             //private string connectionSTR = @"Data Source=NGOXUANHINH2801;Initial Catalog=Hethongquanlylab;Integrated Security=True";
-            private string connectionSTR = @"Data Source=LAPTOP-HQKT29CI\SQLEXPRESS;Initial Catalog = OSSM_database_1; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            private string connectionSTR = @"Data Source=LAPTOP-HQKT29CI\SQLEXPRESS;Initial Catalog=OSSM_databae;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 
             public DataTable ExcuteQuery(string query, object[] parameter = null)

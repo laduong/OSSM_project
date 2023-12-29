@@ -36,8 +36,9 @@
         </div>
 
         <div style="width: 1030px;margin: auto;text-align: right;">
-            <button class="btn-excel" type="button" onclick="location.href='@Url.Action("AddProduct")'">Nhập lô hàng mới</button>
-            <button class="btn-excel" type="button" onclick="location.href='@Url.Action("ExportProductToExcel", "BDT")'">Thêm sản phẩm/button>
+            <button class="btn-excel" type="button" onclick="location.href='@Url.Action("Batch")'">Lịch sử nhập hàng</button>
+            <button class="btn-excel" type="button" onclick="location.href='@Url.Action("AddBatch")'">Nhập lô hàng mới</button>
+            <button class="btn-excel" type="button" onclick="location.href='@Url.Action("AddProduct")'">Thêm sản phẩm</button>
         </div>
 
         <div class="wrap-sreach">
@@ -50,7 +51,7 @@
 
                 @foreach (var item in Model.SearchFieldList)
                 {
-                    @if ((item != Model.CurrentSearchField) && item != "Avt")
+                    @if ((item != Model.CurrentSearchField) && item != "Product_Image")
                     {
                         <option value="@item">@Model.NameVar[@item]</option>
                     }
@@ -144,18 +145,6 @@
                             if (modelSortOrder === "Startday") {
                                 idSort.value = "Startday_desc";
                             }
-                    var idSort = document.getElementById("Endday");
-                    if (modelSortOrder === "Endday") {
-                        idSort.value = "Endday_desc";
-                    }
-                    var idSort = document.getElementById("Unit");
-                    if (modelSortOrder === "Unit") {
-                        idSort.value = "Unit_desc";
-                    }
-                    var idSort = document.getElementById("Status");
-                    if (modelSortOrder === "Status") {
-                        idSort.value = "Status_desc";
-                    }
 
                             </script>
                         </tr>
