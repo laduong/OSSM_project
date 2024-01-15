@@ -33,51 +33,27 @@ namespace OSSSM_1.Models
               {"Product_Image","Ảnh sản phẩm"},
               {"Product_Text","Mô tả sản phẩm"},
               {"Product_Quanity","Số lượng"},
-              {"Product_Category","Danh mục"},
+              {"FK_Category_ID","Danh mục"},
               {"Product_Size","Size"},
-              {"Content","Nội dung"},
-              {"Type", "Loại" },
-              {"Startday", "Ngày bắt đầu" },
-              {"Endday", "Ngày kết thúc" }
+              {"Batch_TotalValue","Tổng giá trị lô hàng"},
+              {"Batch_Name","Tên lô hàng"},
+              {"Batch_BuyDate", "Ngày nhập hàng" },
+              {"Batch_ID", "Mã đơn hàng" },
+              {"Cost_Name", "Tên chi phí" },
+              {"Cost_ID", "Mã chi phí" },
+              {"Cost_Date", "Ngày chi" },
+              {"Cost_Value", "Giá trị chi" },
+              {"Cost_Type", "Loại chi phí" },
+              {"Bill_Name", "Tên hóa đơn" },
+              {"Bill_ID" , "Mã hóa đơn"},
+              {"Bill_SellDate", "Ngày bán" },
+              {"Bill_TotalValue", "Tổng giá trị đơn" },
+              {"Bill_Address", "Địa chỉ giao hàng" },
+
+
           };
 
-        /*  private Dictionary<string, string> unitVar = new Dictionary<string, string>()
-          {
-              {"All", "Toàn bộ thành viên" },
-              {"LT", "Thành viên Leader Team" },
-              {"PT", "Thành viên Power Team" },
-              {"BNS","Thành viên Ban Nhân Sự"},
-              {"BDT","Thành viên Ban Đào Tạo"},
-              {"BDH","Thành viên Ban Điều Hành"},
-              {"BDS","Thành viên Ban Đời Sống"},
-              {"BGS","Thành viên Ban Giám Sát"},
-              {"BSK","Thành viên Ban Sự Kiện"},
-              {"BTT","Thành viên Ban Truyền Thông"},
-              {"BCV","Thành viên Ban Cố Vấn"},
-          };*/
-        /*
-          private Dictionary<string, string> procedureVar = new Dictionary<string, string>()
-          {
-              {"All", "Toàn bộ quy trình" },
-              {"BDH","Quy trình Ban Điều Hành"},
-              {"BCV","Quy trình Ban Cố Vấn"},
-              {"NSL","Nhà Sáng Lập"},
-              {"NDSL","Nhà Đồng Sáng Lập"},
-          };
-
-          private Dictionary<string, string> procedureColorVar = new Dictionary<string, string>()
-          {
-              {"Chưa duyệt", "#4800ff"},
-              {"Chờ duyệt", "#ff6a00"},
-              {"Ban Điều Hành đã duyệt", "#0a0"},
-              {"Ban Cố Vấn đã duyệt", "#0c0"},
-              {"Nhà Sáng Lập đã duyệt", "#0f0"},
-              {"Ban Điều Hành trả lại", "#a00"},
-              {"Ban Cố Vấn trả lại", "#c00"},
-              {"Nhà Sáng Lập trả lại", "#f00"},
-              {"Đã duyệt", "#0f0"}
-          };
-        */
+        
 
 
         public int PageCount { get => pageCount; set => pageCount = value; }
@@ -119,22 +95,7 @@ namespace OSSSM_1.Models
             this.sessionVar = "";
         }
 
-        public ItemDisplay(string sessionVar)
-        {
-            this.sessionVar = sessionVar; // Session
-
-            this.pageSize = 10;
-            this.currentPage = 1;
-            this.searchFieldList = new List<String>();
-
-            foreach (var attr in typeof(T).GetProperties().ToList())
-            {
-                this.searchFieldList.Add(attr.Name.ToString());
-            }
-
-            this.isMessage = false;
-            this.message = "";
-        }
+        
 
         public void Paging(List<T> members, int pageSize)
         {

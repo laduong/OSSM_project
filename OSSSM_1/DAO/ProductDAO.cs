@@ -30,15 +30,9 @@ namespace OSSSM_1.DAO
             return items;
         }
 
-        public List<Product> GetProductList(string unit, string var = "")
-        {
-            List<Product> items = DataProvider<Product>.Instance.GetListItem("Unit", unit);
-            return items;
-        }
-
         public Product GetProductModelbyId(string ID)
         {
-            Product item = DataProvider<Product>.Instance.GetItem("ID", ID);
+            Product item = DataProvider<Product>.Instance.GetItem("Product_ID", ID);
             return item;
         }
 
@@ -77,6 +71,30 @@ namespace OSSSM_1.DAO
         public void DeleteProduct(String ID)
         {
             DataProvider<Product>.Instance.DeleteItem("Product_ID", ID);
+        }
+        public void UpdateProductQuanity()
+        {
+            List<Product> products = DataProvider<Product>.Instance.GetListItem("Product");
+            foreach(Product item in products)
+            {
+                int sum_import = 0;
+                int sum_export = 0;
+                List<BatchDetail> batches = DataProvider<BatchDetail>.Instance.GetListItem("FK_Product_ID", item.Product_ID, "BatchDetail");
+                foreach(BatchDetail batch in batches)
+                {
+                    sum_import += batch.BatchDetail_Quanity;
+                }
+                List<BillDetail> bills  = DataProvider<BillDetail>.Instance.GetListItem("FK_Product_ID", item.Product_ID, "BillDetail");
+                foreach (BillDetail bill in bills)
+                {
+                    sum_export += bill.BillDetail_Quanity;
+                }
+                int sum = sum_import - sum_export > 0 ? sum_import - sum_export : 0;
+                DataProvider<Product>.Instance.ExcuteQuery(String.Format("Update dbo.Product set Product_Quanity = {0} where Product_ID = {1}", sum, item.Product_ID));
+                
+            }
+            
+            
         }
     }
 }

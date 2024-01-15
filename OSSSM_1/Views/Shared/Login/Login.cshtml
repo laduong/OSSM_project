@@ -3,54 +3,250 @@
     ViewData["Title"] = "Login";
     Layout = "";
 }
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/css/login.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-
-    <title>Đăng nhập</title>
+    <title>Cửa hàng Ba con dê - Đăng nhập</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="wrapper">
-        <form asp-controller="Login" method="post" id="form-login">
-            <h1 class="form-heading">Đăng nhập</h1>
-            <div class="form-group">
-                <i class="far fa-user"></i>
-                <input name="UserName" type="text" class="form-input no-autofill-bgk" placeholder="Tên đăng nhập" value="@Model.UserName" autofocus>
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tiêu đề Website của bạn</title>
+    
+    </head>
+    <body>
+        <header class="header">
+            <div class="logo-container">
+                <img src="https://lh3.googleusercontent.com/pw/ABLVV85GArRyG8yG3BhwK7y12uM0KUZbUICp_oEcTH3Q2Wj3pjGuOIN3ChISPgjaZHY1rQKmn1nAXX17R6QnfPn_1ruxXCuLDW9pU8NlNJaa0S50ysC7JUzlH0b-Ae4am2Gnv3sQ6uk5qppq387aJd356YWd2i6VOQPPkd2vsfuci7gI3-ubhZiP7ynbeOWTFCjYjRJ3CCHRfNQ7QLxiWxK3ObHmETSfvMwc706KWMzVdcouJajJHNfhbtKqCYLuZa-bZUbIFXZWt5r_6Yeqq9y2Ng3hGTnynCtb9-wsQuQwgEro1M5JYPqU00EYlV1e8w26zCsHqeC6NI7Od0BaqH6nW3V-8XGn529wPeETrJMhM1Ji85VhhPT1SpUOz4oEos-QdulSJWOMQjY7orvpIT9g7vR_LgXMUa9qKjWcNrswRTmdGmaDiDGTNbWDnqrN4b-PjGUUdX3xgVVXSUJ39frrERGEWCdb_K2nfLU2ex9EJsYAUSinGgrAXNg7sUJbJ1lxL7rlzAMUyRixH9UJTUt8dmmR-AdkAWpfgikKyqyItYJKpJ33PoeUeRijOvaCN8IH8Hj_ZXkxdlyto2sVtWT15wnHiI4E9JVVU_Zsdv5psv57PwUIk3aOhRGQSSodJeHJkYzU_xGF0XVLbjVCatpCuwS_LaLdFQk3bcPIT4zBKglRuCFCl1OMHacw5eXmrG8vxE76p254ksVhGHHbytd8b7-nSXtXRgpOUgUyDDd062KYhL0Ri6W2awiMXuS87o5jh8o3E6PK-c3k0A19PNG4WyC1JXn2s_bQAfrkS12Lw6IL3v4YswhSVqDQF4Su8WdYsEsao34Gu4i5AuM-zWHRdmN3oOQPce_O_swp651cjk72m_C-oMDQYf1rOLKm0JC_0PNq5ahJuIoMYah5ykC9smXYuSOTi2Lhagwr_Av-oCRaingXEQtkd-9YLBUbUd1L4N23px-bm5R2Og=w182-h172-s-no-gm?authuser=0" alt="Logo" class="logo"> <!-- Thay 'logo.png' bằng đường dẫn thực tế đến file logo của bạn -->
             </div>
-            <div class="form-group">
-                <i class="fas fa-key"></i>
-                <input id ="Input1" name="Password" type="password" class="form-input no-autofill-bgk" placeholder="Mật khẩu" value="@Model.Password">
-                <div id ="eye" onclick="TogglePassword(1)">
-                    <i id ="eye-icon" class="fa fa-eye"></i>
+            <nav class="navbar">
+                <ul class="nav-menu">
+                    
+                </ul>
+            </nav>
+        </header>
+        <div class="container">
+            <div class="left-panel">
+                <div class="shop-info">
+                    <img src="~/img/layout/logo.jpg" />
                 </div>
             </div>
+            <div class="right-panel">
+                <div class="login-box">
+                    <div id="wrapper">
+                        <form asp-controller="Login" method="post" id="form-login">
+                            <h1 class="form-heading">Đăng nhập</h1>
+                            <div class="form-group">
+                                <i class="far fa-user"></i>
+                                <label for="email">Tên đăng nhập</label>
+                                <input name="UserName" type="text" id="email" placeholder="Tên đăng nhập" value="@Model.UserName" autofocus>
 
-            <div style="color:#f00">@Html.Raw(TempData["msg"])</div>
+                            </div>
+                            <div class="form-group">
+                                <i class="fas fa-key"></i>
+                                <label for="password">Mật khẩu</label>
+                                <input id="password" name="Password" type="password" placeholder="Mật khẩu" value="@Model.Password">
 
-            <input class="form-submit" type="submit" style="margin-top: 15px;" value="Đăng nhập">
-            <input asp-action="ChangeToForgotPassword" type="submit" class="form-submit" value="Quên mật khẩu" style="margin-top: 15px;">
-        </form>
-    </div>
+                                <div id="eye" onclick="TogglePassword(1)">
+                                    <i id="eye-icon" class="fa fa-eye"></i>
+                                </div>
+                            </div>
 
-</body>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
-    function TogglePassword(num) {
-        var x = document.getElementById("Input" + num.toString());
-        if (x.type === "password") {
-            x.type = "text";
-            document.getElementById("eye-icon").className = "fa fa-eye-slash ";
-        } else {
-            x.type = "password";
-            document.getElementById("eye-icon").className = "fa fa-eye";
-        }
-    }
-</script>
+                            <div style="color:#f00">@Html.Raw(TempData["msg"])</div>
+
+                            <input class="login-button" type="submit" style="margin-top: 15px;" value="Đăng nhập">
+                            <input asp-action="ChangeToForgotPassword" type="submit" class="login-button" value="Quên mật khẩu" style="margin-top: 15px;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
 
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            width: 100%; /* Chiều dài chiếm 100% của giao diện */
+            height: 100px;
+            background-color: #333; /* Màu nền của header, bạn có thể thay đổi theo ý muốn */
+            top: 0;
+        }
+
+        .logo-container {
+            width: 5%; /* Chiếm 20% chiều rộng của header */
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Logo được căn giữa */
+        }
+
+        .logo {
+            width: 91px; /* Đảm bảo logo không vượt quá container */
+            height: 100px;
+        }
+
+        .navbar {
+            width: 95%; /* Chiếm 80% chiều rộng của header */
+            display: flex;
+            justify-content: flex-end; /* Menu được đẩy về bên phải */
+        }
+
+
+        .nav-menu {
+            list-style-type: none;
+            display: flex;
+            height: 100%;
+            align-items: center;
+        }
+
+            .nav-menu li {
+                padding: 0 30px; /* Khoảng cách giữa các menu item */
+                position: relative;
+            }
+
+                .nav-menu li a {
+                    text-decoration: none;
+                    color: white; /* Màu chữ của menu item */
+                    font-size: 18px;
+                }
+
+        .nav-item-cart, .nav-item-search {
+            font-size: 18px; /* Kích thước icon giỏ hàng và tìm kiếm */
+        }
+
+        .cart-icon, .search-icon {
+            margin-left: 10px; /* Khoảng cách giữa text và icon */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            margin-right: 300px;
+            height: 900px;
+            width: 100%;
+        }
+
+
+        .left-panel {
+            background-color: #909090;
+            padding: 50px;
+            height: 900px;
+            width: 40%;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            text-align: center;
+        }
+
+        .shop-logo {
+            width: 350px;
+            margin-bottom: 20px;
+        }
+
+        .shop-info h1 {
+            text-align: center;
+            font-size: 40px;
+            color: #ffffff;
+        }
+
+        .right-panel {
+            background-color: #fff;
+            padding: 100px;
+            width: 50%;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            height: 500px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            margin-top: 7%;
+        }
+
+        .login-box {
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+            input[type=email]:focus, input[type=password]:focus {
+                outline: none;
+                border-color: #777;
+            }
+
+        label {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .login-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #bebebe;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+            .login-button .arrow {
+                margin-left: 10px;
+                display: inline-block;
+                transition: transform 0.3s ease;
+            }
+
+            .login-button:hover {
+                background-color: #e3e3e3;
+            }
+
+            .login-button:active .arrow {
+                transform: translateX(5px);
+            }
+
+        /* Optional: Remove default button styles */
+        button:focus {
+            outline: none;
+        }
+
+  
+    </style>
+</body>
+</html>

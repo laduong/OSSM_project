@@ -1,0 +1,415 @@
+﻿
+/* Reset chung */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+/* Phong cách Header và Navigation */
+
+.logo-container {
+    width: 5%; /* Chiếm 20% chiều rộng của header */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Logo được căn giữa */
+}
+
+.logo {
+    width: 91px; /* Đảm bảo logo không vượt quá container */
+    height: 100px;
+}
+
+.navbar {
+    width: 95%; /* Chiếm 80% chiều rộng của header */
+    display: flex;
+    justify-content: flex-end; /* Menu được đẩy về bên phải */
+}
+
+
+.nav-menu {
+    list-style-type: none;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+    .nav-menu li {
+        padding: 0 30px; /* Khoảng cách giữa các menu item */
+        position: relative;
+    }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: white; /* Màu chữ của menu item */
+            font-size: 18px;
+        }
+
+.nav-item-cart, .nav-item-search {
+    font-size: 18px; /* Kích thước icon giỏ hàng và tìm kiếm */
+}
+
+.cart-icon, .search-icon {
+    margin-left: 10px; /* Khoảng cách giữa text và icon */
+}
+
+/* Phong cách cho phần Hero */
+.hero {
+    margin-top: 100px;
+    background: url(/img/layout/background.png) no-repeat center center/cover;
+    background-size: cover;
+    height: 850px;
+    width: 100%;
+    display: flex;
+}
+
+.hero-content h1 {
+    margin-left: 40px;
+    margin-top: 60px;
+    font-size: 78px;
+    margin-bottom: 30px;
+}
+
+.hero-content p {
+    font-size: 40px;
+    margin-left: 50px;
+}
+
+.tieu-de {
+    font-size: 50px;
+    font-style: bold;
+    text-align: center;
+    margin-top: 50px;
+    width: 100%px;
+}
+
+.best-seller {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 620px; /* Đặt chiều cao bằng với chiều cao viewport để căn giữa theo chiều dọc */
+    background: url(/img/layout/bestsaller-background.png) no-repeat center center/cover;
+    background-size: cover;
+    width: 100%;
+}
+
+.shop-now-btn {
+    background-color: #999999; /* Replace with the exact color code */
+    color: white; /* Replace with the exact text color code if different */
+    padding: 10px 20px; /* Adjust the padding to match the size */
+    font-size: 16px; /* Adjust the font size as needed */
+    font-weight: bold; /* This makes the text bold */
+    border: none; /* No border by default, add if there's a border in the image */
+    border-radius: 5px; /* Adjust the border-radius to match the curvature */
+    cursor: pointer; /* Changes the cursor on hover */
+    text-transform: uppercase; /* Makes the text uppercase */
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2); /* Adds a shadow, adjust as needed */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+    .shop-now-btn:hover {
+        background-color: #555; /* Darker shade for hover effect */
+    }
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 70px; /* Khoảng cách giữa các card */
+}
+
+.card {
+    width: 300px; /* Chiều rộng của card */
+    height: 450px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Bóng của card */
+    border-radius: 10px; /* Viền bo tròn */
+    background: url(/img/layout/card-image.jpg) no-repeat center center/cover;
+    text-align: left;
+}
+
+    .card img {
+        width: 100%; /* Chiều rộng hình ảnh vừa với card */
+        border-radius: 10px; /* Viền bo tròn cho ảnh */
+    }
+
+    .card h3 {
+        margin-top: 20px;
+    }
+
+    .card p {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+
+    .card button:hover {
+        background: #555;
+    }
+
+.best-seller {
+    position: relative;
+    /* Các thuộc tính khác giữ nguyên */
+}
+
+.arrow-button {
+    position: absolute;
+    top: 50%; /* Đặt nút ở giữa chiều cao của .best-seller */
+    transform: translateY(-50%); /* Căn giữa nút theo chiều dọc */
+    /* Các thuộc tính khác giữ nguyên */
+}
+
+.arrow-button {
+    background-color: #ccc; /* Màu nền của nút */
+    border: none; /* Loại bỏ viền */
+    border-radius: 50%; /* Làm tròn nút */
+    width: 50px; /* Kích thước chiều rộng */
+    height: 50px; /* Kích thước chiều cao */
+    cursor: pointer; /* Hiển thị con trỏ là dấu tay khi di chuyển chuột qua nút */
+    display: flex; /* Sử dụng flexbox để căn giữa nội dung bên trong nút */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    font-size: 1.5em; /* Điều chỉnh kích thước của mũi tên */
+    color: #333; /* Màu của mũi tên */
+}
+
+    /* Thêm phong cách cho hiệu ứng khi di chuột qua và khi nhấn nút */
+    .arrow-button:hover {
+        background-color: #bbb; /* Thay đổi màu nền khi di chuột qua */
+    }
+
+    .arrow-button:active {
+        background-color: #aaa; /* Thay đổi màu nền khi nút được nhấn */
+    }
+
+
+.left-arrow {
+    left: 50px; /* Điều chỉnh số này để đặt nút bên trái của .best-seller */
+}
+
+.right-arrow {
+    right: 50px; /* Điều chỉnh số này để đặt nút bên phải của .best-seller */
+}
+
+/* Lưu ý: Bạn có thể cần điều chỉnh các giá trị 'left' và 'right' tùy thuộc vào kích thước và vị trí chính xác mà bạn muốn */
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 850px;
+    margin: auto;
+    margin-top: 10vh;
+}
+
+.text-section {
+    width: 40%; /* Adjust width accordingly */
+    padding: 50px; /* Padding based on viewport width */
+    margin-right: 40px;
+    font-size: 40px;
+    margin-left: 40px;
+}
+
+    .text-section h2, .text-section p {
+        margin: 0;
+        padding: 15px 0; /* Vertical padding based on width for responsive spacing */
+    }
+
+.fashion-display {
+    position: relative; /* Thiết lập vị trí tương đối cho container */
+    width: 750px; /* Chiều rộng tối đa dựa trên viewport */
+    margin: auto; /* Căn giữa container */
+}
+
+.fashion-text {
+    position: absolute; /* Vị trí tuyệt đối để đè lên hình ảnh */
+    bottom: 50%; /* Vị trí so với phía dưới của container */
+    left: 50%; /* Vị trí so với cạnh trái của container */
+    transform: translate(-50%, 0); /* Dịch chuyển văn bản để căn giữa chính xác */
+    background-color: rgba(0,0,0,0.5); /* Nền đen bán trong suốt */
+    color: white;
+    text-align: center;
+    width: 80%; /* Chiều rộng của khối văn bản */
+    padding: 15px 50px;
+}
+
+.fashion-image {
+    width: 100%; /* Chiều rộng của hình ảnh đầy đủ container */
+    height: auto; /* Giữ tỷ lệ của ảnh */
+}
+
+.container {
+    display: flex;
+    max-width: 100%;
+    height: 850px;
+}
+
+.left-image {
+    width: 40%;
+    object-fit: cover;
+    padding: 50px;
+    margin-right: 40px;
+    margin-left: 40px;
+}/* Đảm bảo hình ảnh phủ đầy không gian mà không mất tỷ lệ */
+
+.right-section {
+    width: 60%; /* Chiếm nửa chiều rộng còn lại của viewport */
+    display: flex;
+    flex-direction: column;
+}
+
+.why-choose-us {
+    height: 500px;
+    background-color: #878787; /* Màu nâu, điều chỉnh theo mã màu thực tế của bạn */
+    color: white;
+    padding: 50px;
+    text-align: left;
+    font-size: 30px;
+}
+
+.image-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 30px;
+}
+
+.card1 {
+    background-color: #cac9c9; /* Màu xám nhạt */
+    width: 150px;
+    height: 300px;
+    border-radius: 10%;
+}
+
+.feedback-container {
+    margin-top: 85px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    height: 750px;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center;
+    width: 100%;
+}
+
+    .feedback-container h2 {
+        font-size: 50px;
+        margin-bottom: 45px;
+    }
+
+.feedback-card {
+    background-color: #E0E0E0;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 40px;
+    padding: 40px;
+    width: 600px; /* Điều chỉnh theo kích thước cần thiết */
+    height: 308px;
+}
+
+blockquote {
+    quotes: "“" "”" "‘" "’";
+    font-style: italic;
+}
+
+    blockquote:before {
+        content: open-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        margin-right: 0.25em;
+        vertical-align: -0.4em;
+    }
+
+    blockquote:after {
+        content: close-quote;
+    }
+
+.client-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.client-avatar {
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.client-name {
+    display: inline-block;
+}
+
+.feedback-navigation {
+    margin-top: 20px;
+}
+
+.nav-dot {
+    height: 10px;
+    width: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+}
+
+    .nav-dot.active {
+        background-color: #717171;
+    }
+
+.contact-container {
+    background-color: #ccc; /* Màu nền cho container liên hệ */
+    color: #fff;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    height: 700px;
+    width: 100%;
+}
+
+    .contact-container h2 {
+        font-size: 40px;
+        margin-bottom: 30px;
+    }
+
+.contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Hai cột với kích thước bằng nhau */
+    grid-gap: 20px;
+    max-width: 600px; /* Điều chỉnh theo kích thước cần thiết */
+    margin: 20px auto;
+    margin-top: 30px;
+}
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+        padding: 20px;
+        margin-bottom: 30px; /* Khoảng cách giữa các trường nhập */
+    }
+
+    .contact-form textarea {
+        grid-column: 1 / -1; /* Cho textarea chiếm cả hai cột */
+        resize: none; /* Không cho phép điều chỉnh kích thước */
+    }
+
+.send-btn {
+    grid-column: 1 / -1; /* Nút chiếm cả hai cột */
+    padding: 20px 30px;
+    background-color: #333; /* Màu nền cho nút gửi */
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* Làm tròn góc cho nút */
+    cursor: pointer; /* Con trỏ chuột khi di chuyển vào nút */
+}
+
+    .send-btn:hover {
+        background-color: #555; /* Màu khi hover vào nút */
+    }
+

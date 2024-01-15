@@ -22,9 +22,20 @@ namespace OSSSM_1.DAO
             {
                 if (sortOrder == attr.Name.ToString())
                 {
-                    if (attr.Name.ToString() == "Name") result = items.OrderBy(s => attr.GetValue(s, null).ToString().Split(" ").Last());
-                    else if (attr.Name.ToString() == "Birthday") result = items.OrderBy(s => attr.GetValue(s, null).ToString().Split("/").Last());
+                    if (attr.Name.ToString().Contains("Name")) result = items.OrderBy(s => attr.GetValue(s, null).ToString().Split(" ").Last());
+                    else if (attr.Name.ToString().Contains("Date")) result = items.OrderBy(s => attr.GetValue(s, null).ToString().Split("/").Last());
                     else if (attr.Name.ToString() == "ID")
+                    {
+                        try
+                        {
+                            result = items.OrderBy(s => Convert.ToInt32(attr.GetValue(s, null)));
+                        }
+                        catch
+                        {
+                            result = items.OrderBy(s => attr.GetValue(s, null));
+                        }
+                    }
+                    else if (attr.Name.ToString() == "Number")
                     {
                         try
                         {
@@ -41,7 +52,7 @@ namespace OSSSM_1.DAO
                 else if (sortOrder == attr.Name.ToString() + "_desc")
                 {
                     if (attr.Name.ToString() == "Name") result = items.OrderByDescending(s => attr.GetValue(s, null).ToString().Split(" ").Last());
-                    else if (attr.Name.ToString() == "Birthday") result = items.OrderByDescending(s => attr.GetValue(s, null).ToString().Split("/").Last());
+                    else if (attr.Name.ToString() == "Date") result = items.OrderByDescending(s => attr.GetValue(s, null).ToString().Split("/").Last());
                     else if (attr.Name.ToString() == "ID")
                     {
                         try
@@ -51,6 +62,17 @@ namespace OSSSM_1.DAO
                         catch
                         {
                             result = items.OrderByDescending(s => attr.GetValue(s, null));
+                        }
+                    }
+                    else if (attr.Name.ToString() == "Number")
+                    {
+                        try
+                        {
+                            result = items.OrderBy(s => Convert.ToInt32(attr.GetValue(s, null)));
+                        }
+                        catch
+                        {
+                            result = items.OrderBy(s => attr.GetValue(s, null));
                         }
                     }
                     else
@@ -123,37 +145,6 @@ namespace OSSSM_1.DAO
                 }
             }
         }*/
-        /*
-        public ItemDisplay<Notification> getNotifications(string page)
-        {
-            page = page == null ? "1" : page;
-            int currentPage = Convert.ToInt32(page);
-            ItemDisplay<Notification> notificationList = new ItemDisplay<Notification>();
-            notificationList.CurrentPage = currentPage;
-
-            List<Notification> notifications = NotificationDAO.Instance.GetNotificationList_Excel();
-            notifications.Reverse();
-
-            notificationList.Paging(notifications, 5);
-
-
-            if (notificationList.PageCount > 0)
-            {
-                if (notificationList.CurrentPage > notificationList.PageCount) notificationList.CurrentPage = notificationList.PageCount;
-                if (notificationList.CurrentPage < 1) notificationList.CurrentPage = 1;
-                if (notificationList.CurrentPage != notificationList.PageCount)
-                    try
-                    {
-                        notificationList.Items = notificationList.Items.GetRange((notificationList.CurrentPage - 1) * notificationList.PageSize, notificationList.PageSize);
-                    }
-                    catch { }
-
-                else
-                    notificationList.Items = notificationList.Items.GetRange((notificationList.CurrentPage - 1) * notificationList.PageSize, notificationList.Items.Count % notificationList.PageSize == 0 ? notificationList.PageSize : notificationList.Items.Count % notificationList.PageSize);
-            }
-
-
-            return notificationList;
-        }*/
+       
     }
 }

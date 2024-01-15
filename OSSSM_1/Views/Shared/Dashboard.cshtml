@@ -1,0 +1,404 @@
+﻿@model Dashboard
+@{
+    @section Buttons{
+        <a class="header-item"></a>
+        <a asp-action="Dashboard" class="header-item">Tổng quan</a>
+        <a asp-action="Product" class="header-item">Sản phẩm</a>
+        <a asp-action="Store" class="header-item">Kho hàng</a>
+        <a asp-action="Bill" class="header-item">Hóa đơn</a>
+        <a asp-action="Cost" class="header-item">Chi phí</a>
+    }
+
+    @section Login{
+        <li class="user-info-item">
+            <a asp-controller="Login" asp-action="ChangetoChangePassword">Đổi mật khẩu</a>
+        </li>
+        <li class="user-info-item">
+            <a asp-controller="Home" asp-action="Index">Đăng xuất</a>
+        </li>
+    }
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="left-section">
+            <div class="summary-boxes">
+                <div class="box total-revenue">
+                    <span>Tổng doanh thu</span>
+                    <h2>@Model.Bill_Value</h2>
+                </div>
+                <div class="box total-expenses">
+                    <span>Tổng chi phí</span>
+                    <h2>@Model.Cost_Value</h2>
+                </div>
+                <div class="box total-orders">
+                    <span>Tổng đơn hàng</span>
+                    <h2>@Model.Number_Bill</h2>
+                </div>
+                <div class="box net-profit">
+                    <span>Số lợi nhuận</span>
+                    <h2>@Model.Profit</h2>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="growthChart" width="400" height="200"></canvas>
+            </div>
+            <div class="tenbieudo">
+                Biểu đồ tăng trưởng tháng 1
+            </div>
+
+
+        </div>
+        <div class="right-section">
+            <div class="chart-container">
+                
+                <canvas id="productChart" width="400" height="200"></canvas>
+
+            </div>
+
+            <div class="report-section">
+                <div class="dropdown-report">
+                    <div class="report-type">Chọn loại báo cáo</div>
+
+                </div>
+                <div class="date-inputs">
+                    <div class="date-from">
+                        <label for="from-date">Từ</label>
+                        <input type="date" id="from-date">
+                    </div>
+                    <div class="date-to">
+                        <label for="to-date">Đến</label>
+                        <input type="date" id="to-date">
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="view-report">Xem báo cáo</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <style>
+        /* Reset CSS: Loại bỏ các margin, padding mặc định và thiết lập box-sizing để các phần tử HTML không bị ảnh hưởng bởi padding và border */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Thiết lập font chữ mặc định cho body, các thẻ h2 và span để đồng nhất trên toàn bộ dashboard */
+        body, h2, span {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar styles: Thiết kế cho thanh điều hướng phía trên cùng */
+
+        .navbar {
+            display: flex; /* Bật Flexbox */
+            justify-content: center; /* Căn giữa các thẻ con theo chiều ngang */
+            align-items: center; /* Căn giữa các thẻ con theo chiều dọc */
+            background-color: #000; /* Màu nền của thanh điều hướng */
+            padding: 10px 0; /* Đệm dọc cho thanh điều hướng */
+            margin-left: 10vw;
+            margin-bottom: 5vh;
+            height: 7vh;
+        }
+
+            .navbar ul {
+                list-style: none; /* Loại bỏ các dấu đầu dòng */
+                display: flex; /* Bật Flexbox cho danh sách */
+                justify-content: center; /* Căn giữa các thẻ li theo chiều ngang */
+                align-items: center; /* Căn giữa các thẻ li theo chiều dọc */
+                padding: 0; /* Loại bỏ đệm mặc định của ul */
+                margin: 0; /* Loại bỏ margin mặc định của ul */
+            }
+
+            .navbar li {
+                margin: 0 6vw; /* Tạo khoảng cách ngang giữa các thẻ li */
+                color: white; /* Màu chữ trắng cho các thẻ li */
+                cursor: pointer; /* Cho thẻ li có dạng con trỏ khi rê chuột vào */
+                font-size: 120%;
+            }
+
+            /* Định dạng cho mục đang được chọn (active) */
+            .navbar .active {
+                font-weight: bold; /* Đặt in đậm cho thẻ li đang hoạt động */
+            }
+
+
+        /* Định dạng chung cho dashboard */
+        .dashboard {
+            display: flex; /* Sử dụng flexbox để sắp xếp các phần tử con */
+            justify-content: space-between; /* Phân bố khoảng trắng đều giữa các phần tử con */
+            padding: 54px 20px; /* Đệm ngang cho dashboard */
+        }
+
+        /* Phần tổng quan về tài chính ở bên trái dashboard */
+        .left-section, .right-section {
+            width: 49%; /* Chiếm 49% chiều rộng của dashboard để tạo khoảng cách giữa hai cột */
+        }
+
+        /* Container cho các hộp thông tin tổng quan (tổng doanh thu, chi phí, v.v.) */
+        .summary-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            /* justify-content: space-between; */
+            margin-left: 10%;
+        }
+
+        /* Định dạng cho từng hộp thông tin tổng quan */
+        .box {
+            height: 15vh;
+            margin-bottom: 40px; /* Khoảng cách giữa các hộp thông tin */
+            margin-left: 20px;
+            margin-right: 20px;
+            padding: 20px; /* Đệm trong cho các hộp thông tin */
+            background-color: #fff; /* Màu nền trắng cho hộp thông tin */
+            border-radius: 20px; /* Bo góc cho hộp thông tin */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Bóng đổ cho hộp thông tin */
+            text-align: center; /* Căn giữa nội dung trong hộp thông tin */
+            width: 40%;
+        }
+
+        /* Định dạng cho hộp tổng doanh thu */
+        .total-revenue {
+            border-bottom: 10px solid green; /* Đường viền trái màu xanh lá cây */
+        }
+
+        /* Định dạng cho hộp tổng chi phí */
+        .total-expenses {
+            border-bottom: 10px solid red; /* Đường viền trái màu đỏ */
+        }
+
+        /* Định dạng cho hộp tổng đơn hàng */
+        .total-orders {
+            border-bottom: 10px solid blue; /* Đường viền trái màu xanh dương */
+        }
+
+        /* Định dạng cho hộp lợi nhuận ròng */
+        .net-profit {
+            border-bottom: 10px solid orange; /* Đường viền trái màu cam */
+        }
+
+        /* Placeholder cho biểu đồ tăng trưởng (đã được loại bỏ) */
+        .growth-chart-placeholder {
+            background-color: #ffc107; /* Màu nền vàng cho placeholder */
+            height: 200px; /* Chiều cao cố định cho placeholder */
+            margin-bottom: 20px; /* Khoảng cách giữa placeholder và phần báo cáo */
+        }
+
+        /* Placeholder cho biểu đồ cơ cấu sản phẩm (đã được loại bỏ) */
+        .product-structure-chart-placeholder {
+            height: 200px; /* Chiều cao tương đương với biểu đồ tăng trưởng */
+            background-color: #ddd; /* Màu nền placeholder */
+            margin-bottom: 20px; /* Khoảng cách giữa placeholder và phần báo cáo */
+        }
+
+        /* Định dạng cho khu vực báo cáo phía dưới cùng bên phải */
+        /* Phần báo cáo, bố trí dọc các thành phần */
+        .tenbieudo {
+            margin-top: 10px;
+            margin-left: 35%
+        }
+
+        .chart-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            padding: 15px;
+            width: 80%; /* Hoặc chiều rộng theo yêu cầu của bạn */
+            margin: auto; /* Để căn giữa container */
+        }
+
+            .chart-container h3 {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+        .legend {
+            list-style: none;
+            padding: 0;
+        }
+
+            .legend .item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 5px;
+                margin-left: 60%;
+            }
+
+            .legend .color-box {
+                width: 14px;
+                height: 14px;
+                display: block;
+                margin-right: 5px;
+            }
+
+            .legend .gray {
+                background-color: #ccc;
+            }
+
+            .legend .red {
+                background-color: #ff6384;
+            }
+
+            .legend .yellow {
+                background-color: #ffcd56;
+            }
+
+            .legend .blue {
+                background-color: #36a2eb;
+            }
+
+        .report-section {
+            display: flex;
+            flex-direction: column;
+            margin-left: 5%;
+            background-color: #fff;
+            margin-top: 10%;
+            width: 85%;
+        }
+
+        /* Mỗi hàng sẽ là một flex container */
+        .dropdown-report, .date-inputs, .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%; /* Chiều rộng tối đa */
+            /* Khoảng cách giữa các hàng */
+        }
+
+        .report-type {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ccc; /* Viền màu xám nhạt */
+            border-radius: 4px; /* Bo tròn góc */
+            color: #757575; /* Màu chữ cho input và select */
+            background-color: #f8f8f8; /* Màu nền cho input và select */
+            width: 40%; /* Cho phép input và select mở rộng chiều rộng tối đa */
+        }
+
+
+        .dropdown-report label, .date-from label, .date-to label {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 5%;
+        }
+
+        .dropdown-report select, .date-from input, .date-to input {
+            padding: 10px;
+            border: 1px solid #ccc; /* Viền màu xám nhạt */
+            border-radius: 4px; /* Bo tròn góc */
+            color: #757575; /* Màu chữ cho input và select */
+            background-color: #f8f8f8; /* Màu nền cho input và select */
+            width: 100%; /* Cho phép input và select mở rộng chiều rộng tối đa */
+        }
+
+        /* Bố trí các mục nhập liệu ngày trên cùng một hàng */
+        .date-inputs {
+            justify-content: space-between;
+        }
+
+        .date-from, .date-to {
+            width: 40%; /* Chiếm khoảng 48% chiều rộng để tạo khoảng cách giữa "Từ" và "Đến" */
+        }
+
+        /* Container cho nút để căn chỉnh chiều rộng */
+        .button-container {
+            display: flex;
+            justify-content: center; /* Căn giữa nút */
+            width: 100%; /* Chiều rộng tối đa */
+        }
+
+        .view-report {
+            margin-top: 12px;
+            background-color: #ffc107;
+            color: #fff;
+            border: none;
+            padding: 36px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+            outline: none;
+            width: 50%;
+        }
+
+
+            /* Phản hồi khi nhấn nút */
+            .view-report:hover {
+                opacity: 0.9; /* Làm mờ nút một chút khi hover */
+            }
+
+        /* Thêm định dạng cho các phần tử khi focus để nâng cao trải nghiệm người dùng */
+
+
+        .chart-container {
+            height: 45vh;
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <script>
+        const xValues = [1, 2, 3, 4, 90, 100, 110, 120, 130, 140, 150];
+        const yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+        new Chart("growthChart", {
+            type: "line",
+            data: {
+                labels: [@Html.Raw(ViewBag.Dates)],
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "rgba(0,0,255,1.0)",
+                    borderColor: "rgba(0,0,255,0.1)",
+                    data: [@Html.Raw(ViewBag.GrowChart)],
+                }]
+            },
+            options: {
+                legend: { display: false },
+               
+            }
+        });
+    </script>
+    <script>
+        const xValue = ["Italy", "France", "Spain", "USA", "Argentina"];
+        const yValue = [55, 49, 44, 24, 15];
+        const barColors = ["red", "green", "blue", "orange", "brown"];
+        new Chart("productChart", {
+            type: "doughnut",
+            data: {
+                labels: xValue,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValue
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "World Wide Wine Production"
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

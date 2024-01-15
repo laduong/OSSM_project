@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model List<Category>
 
 @{
     @section Buttons{
@@ -37,53 +37,172 @@
         <p>/</p>
         <a asp-action="AddProduct"><h2 style="padding-left: 10px;" class="backMainPage"> Thêm sản phẩm</h2></a>
     </div>
+    <div></div>
+    
     <form asp-action="AddProduct" method="post" id="form-addnotification">
-        <div class="wrap-themDuAn">
-            <label for="">
-                Tên sản phẩm:
-                <input type="text" name="name" placeholder="Name">
-            </label>
-            <label for="">
-                Giá sản phẩm:
-                <input type="text" name="cost" placeholder="ProjectType">
-            </label>
-            <label for="">
-                Giá bán ra:
-                <input type="text" name="price" placeholder="ProjectType">
-            </label>
+        <div class="product-details">
 
-            <label for="">
-                Ảnh:
-                <input type="text" name="image" placeholder="ProjectType">
-            </label>
-            <label for="">
-                Số lượng trong kho:
-                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
-            </label>
-            <label for="">
-                Size:
-                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
-            </label>
-            <label for="">
-                Danh mục:
-                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
-            </label>
-        </div>
-            <label for="">
-                Mô tả:
-                <textarea style="margin: 12px 0; min-height: 500px;" name="text" id="notification_content" cols="30" rows="10"></textarea>
-            </label>
+            <div class="right-column">
+                <div class="product-info">
+                    <div style="margin: 16px 10px; justify-content: left;">
+                        <div>
+                            <p>Tên sản phẩm:</p>
+                            <input style=" height: 25px; margin-top: -5px;" id="name-input" type="text" name="name">
 
-            <div class="" style="text-align:left; width: inherit;">
-                <div style="float: right;">
-                    <button type="submit" class="add-nhanSu">
-                        <i class="fa-solid fa-plus"></i>
-                        Thêm sản phẩm
-                    </button>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Mã sản phẩm: </div>
+                        <input style=" height: 25px; margin-top: -5px;" id="input-id" type="text" name="id" value="">
+
+                    </div>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Giá nhập:</div>
+                        <input style=" height: 25px; margin-top: -5px;" id="input-cost" type="text" name="cost" value="">
+
+                    </div>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Giá bán:</div>
+                        <input style="height: 25px; margin-top: -5px;" id="input-price" type="text" name="price" value="">
+
+                    </div>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Số lượng:</div>
+                        <input style=" height: 25px; margin-top: -5px;" id="input-price" type="text" name="quanity" value="">
+                    </div>
+                    <select name="category", style="height: 36px; width: 202px; margin: 0px 12px; ">
+                        <p>Danh mục</p>
+                        @foreach (var item in Model)
+                        {
+                           <option value="@item.Category_ID">@item.Category_Name</option>
+                        }
+                    </select>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Mô tả: </div>
+               
+                    </div>
+                    <div style="width: inherit;margin: auto; ">
+                        <style>
+                            .text-ProcedureContent {
+                                width: 100%;
+                                height: 200px;
+                                background-color: #f5f5f5;
+                                border: 2px solid #ccc;
+                                line-height: 34px;
+                                padding: 20px 10px;
+                                overflow: scroll;
+                            }
+                        </style>
+                        <textarea name="text" style=" padding: 20px 10px; line-height: 34px; width: 100%; height: 200px; " id="input-noiDung" cols="30" rows="40" value="Nội dung"></textarea>
+                    </div>
+
+                    <div class=" ">
+                        <button class="add-nhanSu btn-confirm" onclick="confirm_change()" type="button" id="Send" style="width: 180px;">
+                            <i class="fa-solid fa-plus"></i>
+                            Lưu
+                        </button>
+
+                    </div>
                 </div>
 
             </div>
+            <style>
 
+                .product-details {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 20px;
+                    margin-top: 5%;
+                }
+
+                .left-column,
+                .right-column {
+                    flex: 1;
+                }
+
+                .left-column {
+                    width: 50%;
+                    float: left;
+                }
+
+                .product-info {
+                    margin-bottom: 2%;
+                }
+
+                .product-image {
+                    margin-top: 5%;
+                    width: 70%;
+                    height: 40%;
+                    margin-bottom: 2%;
+                }
+
+                .action-button {
+                    background-color: #FFD700;
+                    color: #000;
+                    font-size: 16px;
+                    margin-top: 20px;
+                    margin-right: 100%;
+                    margin-left: 20px;
+                    width: 35%;
+                    height: 5%;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                }
+
+                .right-column {
+                    width: 50%;
+                    float: left;
+                    position: relative;
+                }
+
+                .left-column .product-info > * {
+                    margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+                }
+
+                .right-column .product-info > * {
+                    margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+                }
+
+                .right-column .product-info {
+                    margin-bottom: 30px;
+                }
+
+                .right-column .image-container {
+                    position: relative;
+                }
+
+                .right-column img {
+                    width: 80%;
+                    height: 20%;
+                    margin-bottom: 2%;
+                }
+
+                /* Nút "Lưu" ở dưới hình ảnh ở cột phải */
+                .right-column .save-button {
+                    background-color: #FFD700;
+                    color: #000;
+                    font-size: 16px;
+                    margin-top: 10px;
+                    margin-left: 55%;
+                    margin-right: 100%;
+                    width: 25%;
+                    height: 5%;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                }
+            </style>
+
+        </div>
+
+        <div style="display: none; min-width: 40%; height: 30%; left: 30%; top: 30%; z-index: 1;" class="form-frame" id="change-confirm">
+            <a style="text-align: center; color: #000;"> Bạn có chắc chắn muốn chỉnh sửa thông tin dự án này? </a>
+            <div>
+                <button class="form-submit" style="color:#000; border: 1px #edcd1f solid;" type="submit">Có</button>
+                <button class="form-submit" type="button" onclick="confirm_change_disabled()" style="margin-top: 15px; color:#000; border: 1px #edcd1f solid;">Không</button>
+            </div>
         </div>
     </form>
     <script src="./js/dataNhanSu.js"></script>
@@ -91,6 +210,16 @@
     <script>
         const editor = Jodit.make('#notification_content');
     </script>
+    <script>
 
+        function confirm_change() {
+
+            document.getElementById("change-confirm").style.display = "block";
+        }
+
+        function confirm_change_disabled() {
+            document.getElementById("change-confirm").style.display = "none";
+        }
+    </script>
 </body>
 </html>

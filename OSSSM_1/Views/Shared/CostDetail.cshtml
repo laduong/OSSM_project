@@ -1,0 +1,191 @@
+﻿@model Cost
+@{
+    @section Buttons{
+        <a class="header-item"></a>
+        <a asp-action="Dashboard" class="header-item">Tổng quan</a>
+        <a asp-action="Cost" class="header-item">Sản phẩm</a>
+        <a asp-action="Store" class="header-item">Kho hàng</a>
+        <a asp-action="Bill" class="header-item">Hóa đơn</a>
+        <a asp-action="Cost" class="header-item">Chi phí</a>
+    }
+
+    @section Login{
+        <li class="user-info-item">
+            <a asp-controller="Login" asp-action="ChangetoChangePassword">Đổi mật khẩu</a>
+        </li>
+        <li class="user-info-item">
+            <a asp-controller="Home" asp-action="Index">Đăng xuất</a>
+        </li>
+    }
+}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/procedures.css">
+</head>
+<body>
+    <div class="wrap-back" style="display:flex;">
+        <a asp-action="Index"><h2 class="backMainPage"> Trang Chủ</h2></a>
+        <p>/</p>
+        <a asp-action="Cost"><h2 style="padding-left: 10px;" class="backMainPage">Chi phí</h2></a>
+        <p>/</p>
+        <a asp-action="CostDetail"><h2 style="padding-left: 10px;" class="backMainPage">Chi tiết khoản chi</h2></a>
+    </div>
+    <form asp-action="EditCost" asp-route-id="@Model.Cost_ID" method="post" id="form">
+        <div class="product-details">
+
+            <div class="right-column">
+                <div class="product-info">
+                    <div style="margin: 16px 10px; justify-content: left;">
+                        <div>
+                            <p>Tên khoản chi:</p>
+                            <input style="height: 25px; margin-top: -5px;" id="name-input" type="text" name="name" value="@Model.Cost_Name">
+                        </div>
+                    </div>
+
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Mã khoản chi: </div>
+                        <input style="height: 25px; margin-top: -5px;" id="input-id" type="text" name="id" value="@Model.Cost_ID">
+
+                    </div>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Ngày chi:</div>
+                        <input style="height: 25px; margin-top: -5px;" id="input-id" type="text" name="cost" value="@Model.Cost_Date">
+                    </div>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Tổng giá trị</div>
+                        <input style="height: 25px; margin-top: -5px;" id="input-price" type="text" name="price" value="@Model.Cost_Value">
+                        <i style="margin-left: 20px; cursor:pointer;" class="fa-regular fa-pen-to-square" id="id-symbol"></i>
+                    </div>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <select name="type" , style="height: 36px; width: 202px; margin: 0px 12px; ">
+                            @if (Model.Cost_Type == 0)
+                            {
+                                <p>Loại chi phí: Chi phí cố định</p>
+                            }
+                            else if (Model.Cost_Type == 1)
+                            {
+                                <p>Loại chi phí: Chi phí phát sinh</p>
+                            }
+                            else
+                            {
+                                <p>Loại chi phí: Nợ</p>
+                            }
+                            <option value="0">Chi phí cố định</option>
+                            <option value="1">Chi phí phát sinh</option>
+                            <option value="2">Nợ</option>
+                        </select>
+                    <div class=" ">
+                        <button class="add-nhanSu btn-confirm" onclick="confirm_change()" type="button" id="Send" style="width: 180px;">
+                            <i class="fa-solid fa-plus"></i>
+                            Lưu
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div style="display: none; min-width: 40%; height: 30%; left: 30%; top: 30%; z-index: 1;" class="form-frame" id="change-confirm">
+            <a style="text-align: center; color: #000;"> Bạn có chắc chắn muốn chỉnh sửa thông tin dự án này? </a>
+            <div>
+                <button class="form-submit" style="color:#000; border: 1px #edcd1f solid;" type="submit">Có</button>
+                <button class="form-submit" type="button" onclick="confirm_change_disabled()" style="margin-top: 15px; color:#000; border: 1px #edcd1f solid;">Không</button>
+            </div>
+        </div>
+    </form>
+    <style>
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top: 5%;
+        }
+
+        .left-column,
+        .right-column {
+            flex: 1;
+        }
+
+        .left-column {
+            width: 50%;
+            float: left;
+        }
+
+        .product-info {
+            margin-bottom: 2%;
+        }
+
+        .product-image {
+            margin-top: 5%;
+            width: 70%;
+            height: 40%;
+            margin-bottom: 2%;
+        }
+
+        .action-button {
+            background-color: #FFD700;
+            color: #000;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-right: 100%;
+            margin-left: 20px;
+            width: 35%;
+            height: 5%;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .right-column {
+            width: 50%;
+            float: left;
+            position: relative;
+        }
+
+        .left-column .product-info > * {
+            margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+        }
+
+        .right-column .product-info > * {
+            margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+        }
+
+        .right-column .product-info {
+            margin-bottom: 30px;
+        }
+
+        .right-column .image-container {
+            position: relative;
+        }
+
+        .right-column img {
+            width: 80%;
+            height: 20%;
+            margin-bottom: 2%;
+        }
+
+        /* Nút "Lưu" ở dưới hình ảnh ở cột phải */
+        .right-column .save-button {
+            background-color: #FFD700;
+            color: #000;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-left: 55%;
+            margin-right: 100%;
+            width: 25%;
+            height: 5%;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+
+
+</body>

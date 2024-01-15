@@ -1,0 +1,203 @@
+﻿
+
+@{
+    @section Buttons{
+        a class="header-item"></a>
+        <a asp-action="Dashboard" class="header-item">Tổng quan</a>
+        <a asp-action="Cost" class="header-item">Sản phẩm</a>
+        <a asp-action="Bill" class="header-item">Hóa đơn</a>
+        <a asp-action="Cost" class="header-item">Chi phí</a>
+    }
+
+    @section Login{
+        <li class="user-info-item">
+            <a asp-controller="Login" asp-action="ChangetoChangePassword">Đổi mật khẩu</a>
+        </li>
+        <li class="user-info-item">
+            <a asp-controller="Home" asp-action="Index">Đăng xuất</a>
+        </li>
+    }
+}
+
+
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/nhanSu&DuAn.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.20.2/jodit.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.20.2/jodit.min.js"></script>
+</head>
+<body>
+
+    <div class="wrap-back" style="display:flex;">
+        <a asp-action="Index"><h2 class="backMainPage"> Trang Chủ</h2></a>
+        <p>/</p>
+        <a asp-action="Cost"><h2 style="padding-left: 10px;" class="backMainPage"> Sản phẩm</h2></a>
+        <p>/</p>
+        <a asp-action="AddCost"><h2 style="padding-left: 10px;" class="backMainPage"> Thêm sản phẩm</h2></a>
+    </div>
+    <div></div>
+
+    <form asp-action="AddCost" method="post" id="form-addnotification">
+        <div class="product-details">
+
+            <div class="right-column">
+                <div class="product-info">
+
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Mã chi phí: </div>
+                        <input style=" height: 25px; margin-top: -5px;" id="input-id" type="text" name="id" value="">
+
+                    </div>
+                    <div style="margin: 16px 10px; justify-content: left;">
+
+                        <div>
+                            <p>Tên chi phí:</p>
+                            <input style=" height: 25px; margin-top: -5px;" id="name-input" type="text" name="name">
+
+                        </div>
+                    </div>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Tổng chi:</div>
+                        <input style=" height: 25px; margin-top: -5px;" id="input-cost" type="number" name="value" value="">
+
+                    </div>
+                    <select name="type" , style="height: 36px; width: 202px; margin: 0px 12px; ">
+                        <p>Loại chi phí</p>
+                        <option value="0">Chi phí cố định</option>
+                        <option value="1">Chi phí phát sinh</option>
+                        <option value="2">Nợ</option>
+                    </select>
+                    <div style="display:flex; margin: 16px 10px; justify-content: left;">
+                        <div id="text-status">Ngày chi:</div>
+                        <input type="datetime-local" id="birthdaytime" name="date" style="width: 80%; padding: 16px">
+                    </div>
+                    <div class=" ">
+                        <button class="add-nhanSu btn-confirm" onclick="confirm_change()" type="button" id="Send" style="width: 180px;">
+                            <i class="fa-solid fa-plus"></i>
+                            Lưu
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+            <style>
+
+                .product-details {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 20px;
+                    margin-top: 5%;
+                }
+
+                .left-column,
+                .right-column {
+                    flex: 1;
+                }
+
+                .left-column {
+                    width: 50%;
+                    float: left;
+                }
+
+                .product-info {
+                    margin-bottom: 2%;
+                }
+
+                .product-image {
+                    margin-top: 5%;
+                    width: 70%;
+                    height: 40%;
+                    margin-bottom: 2%;
+                }
+
+                .action-button {
+                    background-color: #FFD700;
+                    color: #000;
+                    font-size: 16px;
+                    margin-top: 20px;
+                    margin-right: 100%;
+                    margin-left: 20px;
+                    width: 35%;
+                    height: 5%;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                }
+
+                .right-column {
+                    width: 50%;
+                    float: left;
+                    position: relative;
+                }
+
+                .left-column .product-info > * {
+                    margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+                }
+
+                .right-column .product-info > * {
+                    margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+                }
+
+                .right-column .product-info {
+                    margin-bottom: 30px;
+                }
+
+                .right-column .image-container {
+                    position: relative;
+                }
+
+                .right-column img {
+                    width: 80%;
+                    height: 20%;
+                    margin-bottom: 2%;
+                }
+
+                /* Nút "Lưu" ở dưới hình ảnh ở cột phải */
+                .right-column .save-button {
+                    background-color: #FFD700;
+                    color: #000;
+                    font-size: 16px;
+                    margin-top: 10px;
+                    margin-left: 55%;
+                    margin-right: 100%;
+                    width: 25%;
+                    height: 5%;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                }
+            </style>
+
+        </div>
+
+        <div style="display: none; min-width: 40%; height: 30%; left: 30%; top: 30%; z-index: 1;" class="form-frame" id="change-confirm">
+            <a style="text-align: center; color: #000;"> Bạn có chắc chắn muốn chỉnh sửa thông tin dự án này? </a>
+            <div>
+                <button class="form-submit" style="color:#000; border: 1px #edcd1f solid;" type="submit">Có</button>
+                <button class="form-submit" type="button" onclick="confirm_change_disabled()" style="margin-top: 15px; color:#000; border: 1px #edcd1f solid;">Không</button>
+            </div>
+        </div>
+    </form>
+    <script src="./js/dataNhanSu.js"></script>
+    <script src="./js/dataDuAn.js"></script>
+    <script>
+        const editor = Jodit.make('#notification_content');
+    </script>
+    <script>
+
+        function confirm_change() {
+
+            document.getElementById("change-confirm").style.display = "block";
+        }
+
+        function confirm_change_disabled() {
+            document.getElementById("change-confirm").style.display = "none";
+        }
+    </script>
+</body>
+</html>

@@ -5,7 +5,6 @@
         <a class="header-item"></a>
         <a asp-action="Dashboard" class="header-item">Tổng quan</a>
         <a asp-action="Product" class="header-item">Sản phẩm</a>
-        <a asp-action="Store" class="header-item">Kho hàng</a>
         <a asp-action="Bill" class="header-item">Hóa đơn</a>
         <a asp-action="Cost" class="header-item">Chi phí</a>
     }
@@ -28,14 +27,14 @@
     <link rel="stylesheet" href="~/css/procedures.css">
 </head>
 <body>
-    <form asp-action="Product" method="post" style="z-index: 0;">
+    <form asp-action="Product" method="post" style="z-index: 0; padding-bottom: 100px;">
         <div class="wrap-back" style="display:flex;">
             <a asp-action="Index"><h2 class="backMainPage"> Trang Chủ</h2></a>
             <p>/</p>
-            <a asp-action="Product"><h2 style="padding-left: 10px;" class="backMainPage">Thông báo</h2></a>
+            <a asp-action="Product"><h2 style="padding-left: 10px;" class="backMainPage">Sản phẩm</h2></a>
         </div>
 
-        <div style="width: 1030px;margin: auto;text-align: right;">
+        <div style="width: 85vw;margin: auto;text-align: right;">
             <button class="btn-excel" type="button" onclick="location.href='@Url.Action("Batch")'">Lịch sử nhập hàng</button>
             <button class="btn-excel" type="button" onclick="location.href='@Url.Action("AddBatch")'">Nhập lô hàng mới</button>
             <button class="btn-excel" type="button" onclick="location.href='@Url.Action("AddProduct")'">Thêm sản phẩm</button>
@@ -64,7 +63,7 @@
         </div>
 
 
-        <div class="container mt-2">
+        <div class="container mt-2" style="width: 85vw; margin: auto;">
             <table class="table-quyTrinh">
                 <tr>
                     <th>
@@ -81,7 +80,7 @@
                     </th>
                     <th>
                         Giá nhập vào
-                        <button name="sortOrder" id="Startday" value="Startday" onchange="this.forms.submit">
+                        <button name="sortOrder" id="Cost" value="Cost" onchange="this.forms.submit">
                             <i class="fa fa-sort"></i>
                         </button>
                     </th>
@@ -119,8 +118,8 @@
                             <td style="user-select: auto; text-align: center;"> @item.Product_Cost</td>
                             <td style="user-select: auto; text-align: center;"> @item.Product_Price</td>
                             <td style="user-select: auto; text-align: center;"> @item.Product_Quanity</td>
-                            <td style="user-select: auto; text-align: center;"> @item.Product_Category</td>
-               
+                            <td style="user-select: auto; text-align: center;"> @item.FK_Category_ID</td>
+
                             <td style="user-select: auto; text-align: center;">
                                 <button type="button" onclick="location.href='@Url.Action("ProductDetail", new { product_id  = item.Product_ID })'">
                                     <i class="fa fa-info-circle"></i>
@@ -129,24 +128,7 @@
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </td>
-                            <script>
-                            var modelSortOrder = "@Html.Raw(Model.SortOrder)";
-                            var idSort = document.getElementById("Id");
-                            if (modelSortOrder === "Id") {
-                                idSort.value = "Id_desc";
-                            }
 
-                            var idSort = document.getElementById("Name");
-                            if (modelSortOrder === "Name") {
-                                idSort.value = "Name_desc";
-                            }
-
-                            var idSort = document.getElementById("Startday");
-                            if (modelSortOrder === "Startday") {
-                                idSort.value = "Startday_desc";
-                            }
-
-                            </script>
                         </tr>
                     }
                 }
@@ -159,7 +141,7 @@
             </table>
         </div>
 
-        <table>
+        <table style="width: 85vw">
             <tr style="font-size: 20px;">
                 <td>
                     <a>Tổng quy trình: </a>
@@ -263,16 +245,27 @@
             document.forms[0].submit();
         }
     </script>
+    <script>
+              var modelSortOrder = "@Html.Raw(Model.SortOrder)";
+              var idSort = document.getElementById("Id");
+              if (modelSortOrder === "Id") {
+                   idSort.value = "Id_desc";
+              }
+
+              var idSort = document.getElementById("Name");
+              if (modelSortOrder === "Name") {
+                   idSort.value = "Name_desc";
+              }
+
+              var idSort = document.getElementById("Cost");
+              if (modelSortOrder === "Cost") {
+                     idSort.value = "Cost_desc";
+              }
+
+    </script>
 
     <style>
-        .page-btn {
-            margin-left: 5px;
-            margin-right: 5px;
-        }
-
-            .page-btn:hover {
-                color: #fff;
-            }
+        
 
         .form-submit {
             background: transparent;
@@ -311,14 +304,14 @@
             </div>
         }
     }
-
-
     <script>
         function confirm_detele(id) {
+            Id = "" + id;
             var subScene = document.getElementsByClassName("delete-form");
-            for (let i = 0; i < subScene.length; i++) {
+            for (let i = 0; i < @Model.ItemCount; i++) {
                 subScene[i].style.display = "none";
-                if (subScene[i].id == id) {
+                temp = subScene[i].id;
+                if (temp == Id) {
                     subScene[i].style.display = "block";
                 }
             }
@@ -332,5 +325,7 @@
             }
         }
     </script>
+
+
 </body>
 </html>

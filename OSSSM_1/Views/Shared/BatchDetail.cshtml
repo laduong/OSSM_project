@@ -1,0 +1,249 @@
+﻿@model ItemDetail
+@{
+    @section Buttons{
+        <a class="header-item"></a>
+        <a asp-action="Dashboard" class="header-item">Tổng quan</a>
+        <a asp-action="Batch" class="header-item">Sản phẩm</a>
+        <a asp-action="Store" class="header-item">Kho hàng</a>
+        <a asp-action="Bill" class="header-item">Hóa đơn</a>
+        <a asp-action="Cost" class="header-item">Chi phí</a>
+    }
+
+    @section Login{
+        <li class="user-info-item">
+            <a asp-controller="Login" asp-action="ChangetoChangePassword">Đổi mật khẩu</a>
+        </li>
+        <li class="user-info-item">
+            <a asp-controller="Home" asp-action="Index">Đăng xuất</a>
+        </li>
+    }
+}
+
+
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/nhanSu&DuAn.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.20.2/jodit.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.20.2/jodit.min.js"></script>
+</head>
+<body>
+
+    <div class="wrap-back" style="display:flex;">
+        <a asp-action="Index"><h2 class="backMainPage"> Trang Chủ</h2></a>
+        <p>/</p>
+        <a asp-action="Product"><h2 style="padding-left: 10px;" class="backMainPage">Kho hàng</h2></a>
+        <p>/</p>
+        <a asp-action="AddProduct"><h2 style="padding-left: 10px;" class="backMainPage"> Nhập lô hàng mới</h2></a>
+    </div>
+    <div></div>
+
+         <div class="product-details" style="width:65vw; margin:auto">
+            <div style="margin: 16px 10px; justify-content: left; width: 50%">
+                <div>
+                    <p>Mã lô hàng: </p>
+                    <input style=" height: 25px; margin-top: -5px; width: 80%; padding: 16px" id="name-input" type="text" name="id" value="@Model.ID">
+
+                </div>
+            </div>
+             <div style="margin: 16px 10px; justify-content: left; width: 50%">
+                <div>
+                    <p>Tên lô hàng: </p>
+                    <input style=" height: 25px; margin-top: -5px; width: 80%; padding: 16px" id="name-input" type="text" name="id" value="@Model.ID">
+
+                </div>
+            </div>
+            <div style="width: 50%">
+                <p>Ngày nhập hàng: @Model.BuyDate</p>
+                <input type="datetime-local" id="birthdaytime" name="buytime" style="width: 80%; padding: 16px", value="@Model.BuyDate">
+            </div>
+
+
+        </div>
+
+
+        <div class="container mt-2" style="width: 85vw; margin: auto;">
+            <table class="table-quyTrinh" style="width: 85vw">
+                <tr>
+                    <th>
+                        ID
+
+                    </th>
+                    <th>
+                        Tên sản phẩm
+                       
+                    </th>
+                    <th>
+                        Giá nhập vào
+                        
+                    </th>
+
+                    <th>
+                        Số lượng nhập
+                    </th>
+
+                    <th style="text-align: center; width: 5%;">
+                        Chức năng
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Item_List)
+                {
+                    <tr id="0" style="user-select: auto;">
+                    <td style="user-select: auto; text-align: center;"> @item.Item.Product_ID</td>
+                    <td style="user-select: auto;"> @item.Item.Product_Name</td>
+                    <td style="user-select: auto;"> @item.Item.Product_Cost</td>
+                    <td style="user-select: auto; text-align: center;"> @item.Number</td>
+
+                    <td style="user-select: auto; text-align: center;">
+                        <button type="button" onclick="location.href='@Url.Action("ProductDetail", new { product_id = @item.Item.Product_ID })'">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+                        <button type="button" onclick="confirm_detele(@item.Item.Product_ID)" id="deleteMember" value="@item.Item.Product_ID">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+
+                    </tr>
+
+                }
+            </table>
+        </div>
+
+
+        @foreach (var item in Model.Item_List)
+        {
+        <div style="display: none; min-width: 40%; height: 30%; left: 30%; top: 30%; z-index: 1;" class="form-frame delete-form" id="@item.Item.Product_ID">
+            <a style="text-align: center; color: #000;"> Bạn có chắc chắn muốn xóa thông báo có ID = @item.Item.Product_ID không? </a>
+            <div>
+                <button class="button" style="color:#000; border: 1px #edcd1f solid;" onclick="location.href='@Url.Action("DeleteItemFromBatch", new { product_id = item.Item.Product_ID , batch_id = Model.ID })'" value="Có">Có</button>
+                <button class="button" onclick="confirm_delete_disabled()" style="margin-top: 15px; color:#000; border: 1px #edcd1f solid;">Không</button>
+            </div>
+        </div>
+        }
+
+
+
+       
+
+        <style>
+
+            .product-details {
+                display: flex;
+                justify-content: space-between;
+                padding: 20px;
+                margin-top: 5%;
+            }
+
+            .left-column,
+            .right-column {
+                flex: 1;
+            }
+
+            .left-column {
+                width: 50%;
+                float: left;
+            }
+
+            .product-info {
+                margin-bottom: 2%;
+            }
+
+            .product-image {
+                margin-top: 5%;
+                width: 70%;
+                height: 40%;
+                margin-bottom: 2%;
+            }
+
+            .action-button {
+                background-color: #FFD700;
+                color: #000;
+                font-size: 16px;
+                margin-top: 20px;
+                margin-right: 100%;
+                margin-left: 20px;
+                width: 35%;
+                height: 5%;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+
+            .right-column {
+                width: 50%;
+                float: left;
+                position: relative;
+            }
+
+            .left-column .product-info > * {
+                margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+            }
+
+            .right-column .product-info > * {
+                margin-bottom: 25px; /* Điều chỉnh giá trị này để thay đổi khoảng cách giữa các thẻ con */
+            }
+
+            .right-column .product-info {
+                margin-bottom: 30px;
+            }
+
+            .right-column .image-container {
+                position: relative;
+            }
+
+            .right-column img {
+                width: 80%;
+                height: 20%;
+                margin-bottom: 2%;
+            }
+
+            /* Nút "Lưu" ở dưới hình ảnh ở cột phải */
+            .right-column .save-button {
+                background-color: #FFD700;
+                color: #000;
+                font-size: 16px;
+                margin-top: 10px;
+                margin-left: 55%;
+                margin-right: 100%;
+                width: 25%;
+                height: 5%;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        </style>
+
+        </div>
+
+        
+    <script src="./js/dataNhanSu.js"></script>
+    <script src="./js/dataDuAn.js"></script>
+    <script>
+        const editor = Jodit.make('#notification_content');
+    </script>
+    <script>
+
+        function confirm_detele(id) {
+            var subScene = document.getElementsByClassName("delete-form");
+            for (let i = 0; i < subScene.length; i++) {
+                subScene[i].style.display = "none";
+                if (subScene[i].id == id) {
+                    subScene[i].style.display = "block";
+                }
+            }
+        }
+
+
+        function confirm_delete_disabled() {
+            var subScene = document.getElementsByClassName("delete-form");
+            for (let i = 0; i < subScene.length; i++) {
+                subScene[i].style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

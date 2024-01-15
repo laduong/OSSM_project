@@ -90,60 +90,6 @@ namespace OSSSM_1.Controllers
 
         // Đổi mật khẩu
 
-        public IActionResult ChangeToChangePassword() //Action đệm, tránh HttpPost
-        {
-            return RedirectToAction("ChangePassword", "Login");
-        }
-
-        [HttpGet]
-        public IActionResult ChangePassword()
-        {
-            var userSession = JsonConvert.DeserializeObject<UserLogin>(HttpContext.Session.GetString("LoginSession"));
-            Account user = AccountDAO.Instance.GetAccountbyUsername(userSession.UserName);
-            ChangePasswordInput changePasswordInput = new ChangePasswordInput();
-
-            changePasswordInput.OldPassword = TempData["OldPass"] == null ? null : TempData["OldPass"].ToString(); // Lưu thông tin người dùng nhập
-            TempData["OldPass"] = null;
-            changePasswordInput.NewPassword = TempData["NewPass"] == null ? null : TempData["NewPass"].ToString();
-            TempData["NewPass"] = null;
-            changePasswordInput.ReNewPassword = TempData["ReNewPass"] == null ? null : TempData["ReNewPass"].ToString();
-            TempData["ReNewPass"] = null;
-            String changePassSubmit = TempData["ChangePassSubmit"] == null ? "0" : TempData["ChangePassSubmit"].ToString();
-
-
-            if (changePassSubmit == "1")
-            {
-                if (changePasswordInput.OldPassword == null)
-                {
-                    TempData["msg"] = "Vui lòng nhập mật khẩu cũ";
-                }
-                else if (changePasswordInput.OldPassword != user.Password)
-                {
-                    TempData["msg"] = "Bạn nhập sai mật khẩu hiện tại!";
-                }
-                else if (changePasswordInput.NewPassword == null)
-                {
-                    TempData["msg"] = "Vui lòng nhập mật khẩu mới";
-                }
-                else if (changePasswordInput.ReNewPassword == null)
-                {
-                    TempData["msg"] = "Vui lòng xác nhận lại mật khẩu mới";
-                }
-
-                else if (changePasswordInput.OldPassword == user.Password)
-                {
-                    if (changePasswordInput.NewPassword != changePasswordInput.ReNewPassword) TempData["msg"] = "Mật khẩu xác nhận không trùng khớp!";
-                    else
-                    {
-                        TempData["msg"] = "Đổi mật khẩu thành công!";
-                        AccountDAO.Instance.ChangePassword(user.Username, changePasswordInput.NewPassword);
-                        return RedirectToAction("ChangeToLoginIndex", "Login");
-                    }
-                }
-            }
-
-            return View("./Views/Shared/Login/ChangePassword.cshtml", changePasswordInput);
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
